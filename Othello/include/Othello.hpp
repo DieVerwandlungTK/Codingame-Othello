@@ -11,8 +11,8 @@ private:
 
     enum Masks{
         horizontalMask = 0x7E7E7E7E7E7E7E7E,
-        verticalMask = 0x00FFFFFFFFFFFF00,
-        diagonalMask = 0x007E7E7E7E7E7E00
+        verticalMask   = 0x00FFFFFFFFFFFF00,
+        diagonalMask   = 0x007E7E7E7E7E7E00
     };
 
 public:
