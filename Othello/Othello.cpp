@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include "OthelloTypes.hpp"
 #include "Othello.hpp"
@@ -168,16 +169,14 @@ int OthelloBoard::popCount(uint64_t bitboard)const{
     return bitboard & 0x7f;
 }
 
-uint64_t* OthelloBoard::getPopPositions(uint64_t bitboard)const{
+std::vector<uint64_t> OthelloBoard::getPopPositions(uint64_t bitboard)const{
     uint64_t mask = 0x8000000000000000;
-    int cnt = popCount(bitboard);
-    uint64_t positions[cnt];
-    while(cnt){
-        if(bitboard & mask){
-            positions[cnt-1] = mask;
-            --cnt;
+    std::vector<uint64_t> positions;
+    while (mask) {
+        if (bitboard & mask) {
+            positions.push_back(mask);
         }
         mask >>= 1;
     }
-    return positions;
+    return positions; // ムーブセマンティクスを使用してオブジェクトを返す
 }

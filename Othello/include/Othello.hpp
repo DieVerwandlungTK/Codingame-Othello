@@ -1,8 +1,10 @@
 #ifndef OTHELLO_HPP
 #define OTHELLO_HPP
 
-#include "OthelloTypes.hpp"
 #include <cstdint>
+#include <vector>
+
+#include "OthelloTypes.hpp"
 
 class OthelloBoard {
 private:
@@ -42,7 +44,7 @@ public:
 
     int popCount(uint64_t bitboard)const;
 
-    uint64_t* getPopPositions(uint64_t bitboard)const;
+    std::vector<uint64_t> getPopPositions(uint64_t bitboard)const;
 };
 
 #endif
