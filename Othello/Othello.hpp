@@ -9,6 +9,12 @@ private:
     uint64_t blackPieces; // Bitboard representing black pieces
     uint64_t whitePieces; // Bitboard representing white pieces
 
+    enum Masks{
+        horizontalMask = 0x7E7E7E7E7E7E7E7E,
+        verticalMask = 0x00FFFFFFFFFFFF00,
+        diagonalMask = 0x007E7E7E7E7E7E00
+    };
+
 public:
     // Initialize the starting position of the board
     OthelloBoard();
@@ -27,6 +33,8 @@ public:
     uint64_t getLegalMoves(Color color)const;
 
     void setBoard(uint64_t blackPieces, uint64_t whitePieces);
+
+    void makeMove(uint64_t move, Color color);
 };
 
 #endif

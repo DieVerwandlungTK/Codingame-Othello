@@ -22,10 +22,6 @@ uint64_t OthelloBoard::getEmpty()const{
 }
 
 uint64_t OthelloBoard::getLegalMoves(Color color)const{
-    constexpr uint64_t horizontalMask = 0x7E7E7E7E7E7E7E7E;
-    constexpr uint64_t verticalMask = 0x00FFFFFFFFFFFF00;
-    constexpr uint64_t diagonalMask = 0x007E7E7E7E7E7E00;
-
     const uint64_t emptyPieces = getEmpty();
     const uint64_t playerPieces = (color == BLACK) ? blackPieces : whitePieces;
     const uint64_t opponentPieces = (color == BLACK) ? whitePieces : blackPieces;
@@ -86,4 +82,59 @@ uint64_t OthelloBoard::getLegalMoves(Color color)const{
 void OthelloBoard::setBoard(uint64_t blackPieces, uint64_t whitePieces){
     this->blackPieces = blackPieces;
     this->whitePieces = whitePieces;
+}
+
+void OthelloBoard::makeMove(uint64_t move, Color color){
+    uint64_t playerPieces = (color == BLACK) ? blackPieces : whitePieces;
+    uint64_t opponentPieces = (color == BLACK) ? whitePieces : blackPieces;
+    uint64_t flippedPieces = 0;
+    uint64_t tmp = 0;
+
+    tmp = horizontalMask & (opponentPieces << 1);
+    for(int i = 0; i < 5; i++){
+        tmp |= horizontalMask & (tmp << 1);
+    }
+    flippedPieces |= tmp & (move << 1);
+
+    tmp = horizontalMask & (opponentPieces >> 1);
+    for(int i = 0; i < 5; i++){
+        tmp |= horizontalMask & (tmp >> 1);
+    }
+    flippedPieces |= tmp & (move >> 1);
+
+    tmp = verticalMask & (opponentPieces << 8);
+    for(int i = 0; i < 5; i++){
+        tmp |= verticalMask & (tmp << 8);
+    }
+    flippedPieces |= tmp & (move << 8);
+
+    tmp = verticalMask & (opponentPieces >> 8);
+    for(int i = 0; i < 5; i++){
+        tmp |= verticalMask & (tmp >> 8);
+    }
+    flippedPieces |= tmp & (move >> 8);
+
+    tmp = diagonalMask & (opponentPieces << 7);
+    for(int i = 0; i < 5; i++){
+        tmp |= diagonalMask & (tmp << 7);
+    }
+    flippedPieces |= tmp & (move << 7);
+
+    tmp = diagonalMask & (opponentPieces >> 7);
+    for(int i = 0; i < 5; i++){
+        tmp |= diagonalMask & (tmp >> 7);
+    }
+    flippedPieces |= tmp & (move >> 7);
+
+    tmp = diagonalMask & (opponentPieces << 9);
+    for(int i = 0; i < 5; i++){
+        tmp |= diagonalMask & (tmp << 9);
+    }
+    flippedPieces |= tmp & (move << 9);
+
+    tmp = diagonalMask & (opponentPieces >> 9);
+    for(int i = 0; i < 5; i++){
+        tmp |= diagonalMask & (tmp >> 9);
+    }
+    flippedPieces |= tmp & (move >> 9);
 }
