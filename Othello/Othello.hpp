@@ -1,6 +1,7 @@
 #ifndef OTHELLO_HPP
 #define OTHELLO_HPP
 
+#include "OthelloTypes.hpp"
 #include <cstdint>
 
 class OthelloBoard {
@@ -20,6 +21,10 @@ public:
 
     // Function to check if a position is occupied by a piece
     bool isOccupied(uint64_t position)const;
+
+    uint64_t getEmpty()const;
+
+    uint64_t getLegalMoves()const;
 };
 
 #endif
