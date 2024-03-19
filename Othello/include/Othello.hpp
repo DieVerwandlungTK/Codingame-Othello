@@ -10,9 +10,9 @@ private:
     uint64_t whitePieces; // Bitboard representing white pieces
 
     enum Masks{
-        horizontalMask = 0x7E7E7E7E7E7E7E7E,
-        verticalMask   = 0x00FFFFFFFFFFFF00,
-        diagonalMask   = 0x007E7E7E7E7E7E00
+        horizontalMask = 0x7e7e7e7e7e7e7e7e,
+        verticalMask   = 0x00ffffffffffff00,
+        diagonalMask   = 0x007e7e7e7e7e7e00
     };
 
 public:
@@ -33,6 +33,8 @@ public:
     uint64_t getLegalMoves(Color color)const;
 
     void setBoard(uint64_t blackPieces, uint64_t whitePieces);
+
+    uint64_t getShiftedBoard(uint64_t board, int dir)const;
 
     void makeMove(uint64_t move, Color color);
 

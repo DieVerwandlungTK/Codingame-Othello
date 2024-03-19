@@ -28,7 +28,7 @@ uint64_t OthelloBoard::getLegalMoves(Color color)const{
     const uint64_t playerPieces = (color == BLACK) ? blackPieces : whitePieces;
     const uint64_t opponentPieces = (color == BLACK) ? whitePieces : blackPieces;
     uint64_t  legalMoves = 0;
-    uint64_t tmp = 0;
+    uint64_t tmp;
 
     const uint64_t horizontalMasked = opponentPieces & horizontalMask;
     const uint64_t verticalMasked = opponentPieces & verticalMask;
@@ -90,11 +90,53 @@ void OthelloBoard::setBoard(uint64_t blackPieces, uint64_t whitePieces){
     this->whitePieces = whitePieces;
 }
 
+uint64_t OthelloBoard::getShiftedBoard(uint64_t board, int dir)const{
+    switch(dir){
+        case 0:
+            return (board << 1) & 0xfefefefefefefefe;   // left
+        case 1:
+            return (board >> 1) & 0x7f7f7f7f7f7f7f7f;   // right
+        case 2:
+            return (board << 8) & 0xffffffffffffff00;   // up
+        case 3:
+            return (board >> 8) & 0x00ffffffffffffff;   // down
+        case 4:
+            return (board << 7) & 0x7f7f7f7f7f7f7f00;   // up right
+        case 5:
+            return (board >> 7) & 0x00fefefefefefefe;   // down left
+        case 6:
+            return (board << 9) & 0xfefefefefefefe00;   // up left
+        case 7:
+            return (board >> 9) & 0x007f7f7f7f7f7f7f;   // down right
+        default:
+            return 0;
+    }
+}
+
 void OthelloBoard::makeMove(uint64_t move, Color color){
     uint64_t playerPieces = (color == BLACK) ? blackPieces : whitePieces;
     uint64_t opponentPieces = (color == BLACK) ? whitePieces : blackPieces;
     uint64_t flippedPieces = 0;
-    uint64_t tmp = 0;
+    uint64_t tmp, mask;
+    for(int i=0;i<8;++i){
+        tmp = 0;
+        mask = getShiftedBoard(move, i);
+        while(mask && (mask & opponentPieces)){
+            tmp |= mask;
+            mask = getShiftedBoard(mask, i);
+        }
+        if(mask & playerPieces){
+            flippedPieces |= tmp;
+        }
+    }
+    if(color == BLACK){
+        blackPieces ^= move | flippedPieces;
+        whitePieces ^= flippedPieces;
+    }
+    else{
+        whitePieces ^= move | flippedPieces;
+        blackPieces ^= flippedPieces;
+    }
 }
 
 void OthelloBoard::printBoard()const{
