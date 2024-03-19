@@ -24,7 +24,7 @@ public:
 
     uint64_t getEmpty()const;
 
-    uint64_t getLegalMoves()const;
+    uint64_t getLegalMoves(Color color)const;
 };
 
 #endif
