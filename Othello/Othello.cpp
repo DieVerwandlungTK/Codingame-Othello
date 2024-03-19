@@ -82,3 +82,8 @@ uint64_t OthelloBoard::getLegalMoves(Color color)const{
 
     return legalMoves;
 }
+
+void OthelloBoard::setBoard(uint64_t blackPieces, uint64_t whitePieces){
+    this->blackPieces = blackPieces;
+    this->whitePieces = whitePieces;
+}

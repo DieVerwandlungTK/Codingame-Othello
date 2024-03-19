@@ -25,6 +25,8 @@ public:
     uint64_t getEmpty()const;
 
     uint64_t getLegalMoves(Color color)const;
+
+    void setBoard(uint64_t blackPieces, uint64_t whitePieces);
 };
 
 #endif
