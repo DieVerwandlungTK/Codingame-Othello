@@ -35,6 +35,8 @@ public:
     void setBoard(uint64_t blackPieces, uint64_t whitePieces);
 
     void makeMove(uint64_t move, Color color);
+
+    void printBoard()const;
 };
 
 #endif

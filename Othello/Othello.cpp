@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "OthelloTypes.hpp"
 #include "Othello.hpp"
 
@@ -137,4 +139,21 @@ void OthelloBoard::makeMove(uint64_t move, Color color){
         tmp |= diagonalMask & (tmp >> 9);
     }
     flippedPieces |= tmp & (move >> 9);
+}
+
+void OthelloBoard::printBoard()const{
+    uint64_t mask = 0x8000000000000000;
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            if(blackPieces & mask){
+                std::cout << "B ";
+            }else if(whitePieces & mask){
+                std::cout << "W ";
+            }else{
+                std::cout << ". ";
+            }
+            mask >>= 1;
+        }
+        std::cout << std::endl;
+    }
 }

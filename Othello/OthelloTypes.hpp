@@ -6,4 +6,4 @@ enum Color{
     WHITE
 };
 
-#endif OTHELLO_TYPE_HPP
+#endif
