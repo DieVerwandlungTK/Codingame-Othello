@@ -35,49 +35,49 @@ uint64_t OthelloBoard::getLegalMoves(Color color)const{
     const uint64_t diagonalMasked = opponentPieces & diagonalMask;
 
     tmp = horizontalMasked & (playerPieces << 1);
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 5; ++i){
         tmp |= horizontalMasked & (tmp << 1);
     }
     legalMoves |= emptyPieces & (tmp << 1);
 
     tmp = horizontalMasked & (playerPieces >> 1);
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 5; ++i){
         tmp |= horizontalMasked & (tmp >> 1);
     }
     legalMoves |= emptyPieces & (tmp >> 1);
 
     tmp = verticalMasked & (playerPieces << 8);
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 5; ++i){
         tmp |= verticalMasked & (tmp << 8);
     }
     legalMoves |= emptyPieces & (tmp << 8);
 
     tmp = verticalMasked & (playerPieces >> 8);
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 5; ++i){
         tmp |= verticalMasked & (tmp >> 8);
     }
     legalMoves |= emptyPieces & (tmp >> 8);
 
     tmp = diagonalMasked & (playerPieces << 7);
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 5; ++i){
         tmp |= diagonalMasked & (tmp << 7);
     }
     legalMoves |= emptyPieces & (tmp << 7);
 
     tmp = diagonalMasked & (playerPieces >> 7);
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 5; ++i){
         tmp |= diagonalMasked & (tmp >> 7);
     }
     legalMoves |= emptyPieces & (tmp >> 7);
 
     tmp = diagonalMasked & (playerPieces << 9);
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 5; ++i){
         tmp |= diagonalMasked & (tmp << 9);
     }
     legalMoves |= emptyPieces & (tmp << 9);
 
     tmp = diagonalMasked & (playerPieces >> 9);
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 5; ++i){
         tmp |= diagonalMasked & (tmp >> 9);
     }
     legalMoves |= emptyPieces & (tmp >> 9);
@@ -90,24 +90,24 @@ void OthelloBoard::setBoard(uint64_t blackPieces, uint64_t whitePieces){
     this->whitePieces = whitePieces;
 }
 
-uint64_t OthelloBoard::getShiftedBoard(uint64_t board, int dir)const{
+uint64_t OthelloBoard::getShiftedBoard(uint64_t bitboard, int dir)const{
     switch(dir){
         case 0:
-            return (board << 1) & 0xfefefefefefefefe;   // left
+            return (bitboard << 1) & 0xfefefefefefefefe;   // left
         case 1:
-            return (board >> 1) & 0x7f7f7f7f7f7f7f7f;   // right
+            return (bitboard >> 1) & 0x7f7f7f7f7f7f7f7f;   // right
         case 2:
-            return (board << 8) & 0xffffffffffffff00;   // up
+            return (bitboard << 8) & 0xffffffffffffff00;   // up
         case 3:
-            return (board >> 8) & 0x00ffffffffffffff;   // down
+            return (bitboard >> 8) & 0x00ffffffffffffff;   // down
         case 4:
-            return (board << 7) & 0x7f7f7f7f7f7f7f00;   // up right
+            return (bitboard << 7) & 0x7f7f7f7f7f7f7f00;   // up right
         case 5:
-            return (board >> 7) & 0x00fefefefefefefe;   // down left
+            return (bitboard >> 7) & 0x00fefefefefefefe;   // down left
         case 6:
-            return (board << 9) & 0xfefefefefefefe00;   // up left
+            return (bitboard << 9) & 0xfefefefefefefe00;   // up left
         case 7:
-            return (board >> 9) & 0x007f7f7f7f7f7f7f;   // down right
+            return (bitboard >> 9) & 0x007f7f7f7f7f7f7f;   // down right
         default:
             return 0;
     }
@@ -141,8 +141,8 @@ void OthelloBoard::makeMove(uint64_t move, Color color){
 
 void OthelloBoard::printBoard()const{
     uint64_t mask = 0x8000000000000000;
-    for(int i = 0; i < 8; i++){
-        for(int j = 0; j < 8; j++){
+    for(int i = 0; i < 8; ++i){
+        for(int j = 0; j < 8; ++j){
             if(blackPieces & mask){
                 std::cout << "B ";
             }else if(whitePieces & mask){
@@ -154,4 +154,30 @@ void OthelloBoard::printBoard()const{
         }
         std::cout << std::endl;
     }
+}
+
+int OthelloBoard::popCount(uint64_t bitboard)const{
+    bitboard = bitboard - ((bitboard >> 1) & 0x5555555555555555);
+
+    bitboard = (bitboard & 0x3333333333333333) + ((bitboard >> 2) & 0x3333333333333333);
+
+    bitboard = (bitboard + (bitboard >> 4)) & 0x0f0f0f0f0f0f0f0f;
+    bitboard = bitboard + (bitboard >> 8);
+    bitboard = bitboard + (bitboard >> 16);
+    bitboard = bitboard + (bitboard >> 32);
+    return bitboard & 0x7f;
+}
+
+uint64_t* OthelloBoard::getPopPositions(uint64_t bitboard)const{
+    uint64_t mask = 0x8000000000000000;
+    int cnt = popCount(bitboard);
+    uint64_t positions[cnt];
+    while(cnt){
+        if(bitboard & mask){
+            positions[cnt-1] = mask;
+            --cnt;
+        }
+        mask >>= 1;
+    }
+    return positions;
 }

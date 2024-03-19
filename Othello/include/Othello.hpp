@@ -34,11 +34,15 @@ public:
 
     void setBoard(uint64_t blackPieces, uint64_t whitePieces);
 
-    uint64_t getShiftedBoard(uint64_t board, int dir)const;
+    uint64_t getShiftedBoard(uint64_t bitboard, int dir)const;
 
     void makeMove(uint64_t move, Color color);
 
     void printBoard()const;
+
+    int popCount(uint64_t bitboard)const;
+
+    uint64_t* getPopPositions(uint64_t bitboard)const;
 };
 
 #endif
