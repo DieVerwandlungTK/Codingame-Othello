@@ -7,3 +7,4 @@ Board = tuple[Bitboard, Bitboard]
 class Color(IntEnum):
     BLACK = 0
     WHITE = 1
+    NONE  = 2

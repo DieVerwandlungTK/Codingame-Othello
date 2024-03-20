@@ -1,4 +1,4 @@
-from OthelloTypes import *
+from .OthelloTypes import *
 
 class Othello():
     BOARD_SIZE = 8
@@ -14,15 +14,17 @@ class Othello():
         if color == Color.BLACK:
             player = self.blackPieces
             opponent = self.whitePieces
-        else:
+        elif color == Color.WHITE:
             player = self.whitePieces
             opponent = self.blackPieces
+        else:
+            return 0
 
         horizontalMasked = opponent & 0x7e7e7e7e7e7e7e7e
         # 上下端の番人
-        verticalMasked = opponent & 0x00FFFFFFFFFFFF00
+        verticalMasked   = opponent & 0x00FFFFFFFFFFFF00
         # 全辺の番人
-        diagonalMasked = opponent & 0x007e7e7e7e7e7e00
+        diagonalMasked   = opponent & 0x007e7e7e7e7e7e00
         # 空きマスのみにビットが立っているボード
         empty = ~(player | opponent)
 
@@ -95,7 +97,7 @@ class Othello():
         else:
             self.setBoard((opponent, player))
     
-    def popcount(x):
+    def popcount(self, x):
         x = x - ((x >> 1) & 0x5555555555555555)
 
         x = (x & 0x3333333333333333) + ((x >> 2) & 0x3333333333333333)
@@ -106,11 +108,26 @@ class Othello():
         x = x + (x >> 32)
         return x & 0x7f
     
-    def mask2coord(self, mask: Bitboard)->tuple[int, int]:
+    def mask2coord(self, board: Bitboard)->tuple[int, int]:
+        mask = 0x8000000000000000
         for i in range(self.BOARD_SIZE_DOUBLE):
-            if mask & 1:
-                return (i//8, i%8)
+            if board & mask:
+                return (i%8, i//8)
             mask >>= 1
     
     def coord2mask(self, x: int, y: int)->Bitboard:
-        return 1 << (x*8 + y)
+        return 0x8000000000000000 >> (x + 8*y)
+    
+    def printBoard(self)->None:
+        mask = 0x8000000000000000
+        for _ in range(self.BOARD_SIZE):
+            for _ in range(self.BOARD_SIZE):
+                if self.blackPieces & mask:
+                    print('B', end=' ')
+                elif self.whitePieces & mask:
+                    print('W', end=' ')
+                else:
+                    print('.', end=' ')
+                mask >>= 1
+            print()
+        print()
