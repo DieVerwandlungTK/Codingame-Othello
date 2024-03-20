@@ -36,11 +36,15 @@ uint64_t TreeSearchAI::getMove(Color color){
     int bestScore = INT32_MIN;
     OthelloBoard tmp;
     std::vector<uint64_t> moves = board.getPopPositions(legalMoves);
+    uint64_t bestMove = moves[0];
     for(uint64_t move: moves){
         tmp.setBoard(board.getBlackPieces(), board.getWhitePieces());
         tmp.makeMove(move, color);
         int score = search(tmp.getBlackPieces(), tmp.getWhitePieces(), depth-1, color, false);
-        bestScore = std::max(bestScore, score);
+        if(score > bestScore){
+            bestScore = score;
+            bestMove = move;
+        }
     }
-    return bestScore;
+    return bestMove;
 }
