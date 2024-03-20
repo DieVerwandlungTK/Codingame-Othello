@@ -1,6 +1,5 @@
 from OthelloGUI.GUI import OthelloGUI
 from OthelloGUI.OthelloTypes import Color
-from OthelloGUI.OthelloPy import Othello
 
 import tkinter as tk
 import sys
@@ -13,7 +12,7 @@ class Game(OthelloGUI):
         self.AIColor = AIColor
         self.turn = Color.BLACK
 
-        self.AIExe = subprocess.Popen('./AIexecutable/AI.exe'.split(), stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        self.AIExe = subprocess.Popen('../main/main.exe'.split(), stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         self.AIExe.stdin.write((str(AIColor) + '\n').encode('utf-8'))
         self.AIExe.stdin.flush()
 
