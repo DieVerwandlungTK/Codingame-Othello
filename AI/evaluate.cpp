@@ -1,7 +1,7 @@
 #include "evaluate.hpp"
 #include "Othello.hpp"
 
-int evalPieceCount(int64_t blackPieces, int64_t whitePieces, Color color){
+int evalPieceCount(uint64_t blackPieces, uint64_t whitePieces, Color color){
     int blackCount = OthelloBoard::popCount(blackPieces);
     int whiteCount = OthelloBoard::popCount(whitePieces);
     if(color == Color::BLACK){

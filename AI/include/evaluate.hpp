@@ -5,6 +5,6 @@
 
 #include <cinttypes>
 
-int evalPieceCount(int64_t blackPieces, int64_t whitePieces, Color color);
+int evalPieceCount(uint64_t blackPieces, uint64_t whitePieces, Color color);
 
 #endif
