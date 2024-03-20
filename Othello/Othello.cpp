@@ -157,7 +157,7 @@ void OthelloBoard::printBoard()const{
     }
 }
 
-int OthelloBoard::popCount(uint64_t bitboard)const{
+int OthelloBoard::popCount(uint64_t bitboard){
     bitboard = bitboard - ((bitboard >> 1) & 0x5555555555555555);
 
     bitboard = (bitboard & 0x3333333333333333) + ((bitboard >> 2) & 0x3333333333333333);
@@ -178,5 +178,5 @@ std::vector<uint64_t> OthelloBoard::getPopPositions(uint64_t bitboard)const{
         }
         mask >>= 1;
     }
-    return positions; // ムーブセマンティクスを使用してオブジェクトを返す
+    return positions;
 }
