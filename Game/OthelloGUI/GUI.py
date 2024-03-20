@@ -1,8 +1,6 @@
 import tkinter as tk
-import subprocess
-import sys
-from OthelloPy import Othello
-from OthelloTypes import Color
+from .OthelloPy import Othello
+from .OthelloTypes import Color
 
 class OthelloGUI():
     OFFSET_X = 10
@@ -22,7 +20,6 @@ class OthelloGUI():
        self.stoneLabel.place(x=250, y=600, anchor=tk.CENTER)
 
        self.drawBoard()
-       self.drawStoneNumber(self.turn)
 
     def drawBoard(self)->None:
         for x in range(self.othello.BOARD_SIZE):
