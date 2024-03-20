@@ -159,7 +159,7 @@ void OthelloBoard::printBoard()const{
 
 void OthelloBoard::printBoard2file()const{
     uint64_t mask = 0x8000000000000000;
-    FILE *file = fopen("board.txt", "w");
+    FILE *file = fopen("board.txt", "a+");
     for(int i = 0; i < 8; ++i){
         for(int j = 0; j < 8; ++j){
             if(blackPieces & mask){
@@ -173,6 +173,7 @@ void OthelloBoard::printBoard2file()const{
         }
         fprintf(file, "\n");
     }
+    fprintf(file, "\n");
     fclose(file);
 }
 
