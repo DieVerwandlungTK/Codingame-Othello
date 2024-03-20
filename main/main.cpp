@@ -10,7 +10,7 @@ int main(){
     Color AIColor = Color(color);
     TreeSearchAI AI(1, evalPieceCount);
 
-    int64_t blackPieces, whitePieces;
+    uint64_t blackPieces, whitePieces;
     while(1){
         std::cin >> blackPieces >> whitePieces;
         AI.setBoard(blackPieces, whitePieces);
