@@ -1,5 +1,5 @@
 #include "TreeSearchAI.hpp"
-#include "OthelloTypes.hpp"
+#include "NegaAlphaAI.hpp"
 #include "evaluate.hpp"
 
 #include <iostream>
@@ -8,7 +8,7 @@ int main(){
     int color;
     std::cin >> color;
     Color AIColor = Color(color);
-    TreeSearchAI AI(AIColor, 1, evalPieceCount);
+    NegaAlphaAI AI(AIColor, 8, evalWeight);
 
     uint64_t blackPieces, whitePieces;
     while(1){

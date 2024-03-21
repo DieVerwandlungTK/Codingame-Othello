@@ -5,10 +5,9 @@ NegaAlphaAI::NegaAlphaAI(Color AIColor, int depth, std::function<int(uint64_t, u
 
 int NegaAlphaAI::search(uint64_t blackPieces, uint64_t whitePieces, int depth, Color color, bool passed, int alpha, int beta){
     if(depth == 0){
-        return eval(blackPieces, whitePieces, AIColor);
+        return eval(blackPieces, whitePieces, AIColor)*(color == AIColor ? 1 : -1);
     }
 
-    int maxScore = INT32_MIN;
     std::vector<uint64_t> legalMoves = board.getPopPositions(board.getLegalMoves(color));
 
     if(legalMoves.empty()){
@@ -27,9 +26,8 @@ int NegaAlphaAI::search(uint64_t blackPieces, uint64_t whitePieces, int depth, C
                 return score;
             }
             alpha = std::max(alpha, score);
-            maxScore = std::max(maxScore, score);
         }
-        return maxScore;
+        return alpha;
     }
 }
 
@@ -41,7 +39,7 @@ uint64_t NegaAlphaAI::getMove(){
     for(uint64_t move: legalMoves){
         tmp.setBoard(board.getBlackPieces(), board.getWhitePieces());
         tmp.makeMove(move, AIColor);
-        int score = -search(tmp.getBlackPieces(), tmp.getWhitePieces(), depth, Color(AIColor^1), false, -beta, -alpha);
+        int score = -search(tmp.getBlackPieces(), tmp.getWhitePieces(), depth-1, Color(AIColor^1), false, -beta, -alpha);
         if(score>alpha){
             alpha = score;
             bestMove = move;
