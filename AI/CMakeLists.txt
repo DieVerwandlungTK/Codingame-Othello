@@ -2,6 +2,7 @@ add_library(AI
     AIBase.cpp
     evaluate.cpp
     TreeSearchAI.cpp
+    NegaAlphaAI.cpp
 )
 
 target_include_directories(AI
