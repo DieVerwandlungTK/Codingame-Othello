@@ -8,13 +8,13 @@ int main(){
     int color;
     std::cin >> color;
     Color AIColor = Color(color);
-    TreeSearchAI AI(1, evalPieceCount);
+    TreeSearchAI AI(AIColor, 1, evalPieceCount);
 
     uint64_t blackPieces, whitePieces;
     while(1){
         std::cin >> blackPieces >> whitePieces;
         AI.setBoard(blackPieces, whitePieces);
-        std::cout << AI.getMove(AIColor) << std::endl;
+        std::cout << AI.getMove() << std::endl;
     }
     return 0;
 }

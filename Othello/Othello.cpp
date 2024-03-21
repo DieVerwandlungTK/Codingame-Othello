@@ -1,7 +1,5 @@
 #include <iostream>
-#include <vector>
 
-#include "OthelloTypes.hpp"
 #include "Othello.hpp"
 
 // Definition of the default constructor
