@@ -5,4 +5,6 @@
 
 int evalPieceCount(uint64_t blackPieces, uint64_t whitePieces, Color color);
 
+int evalWeight(uint64_t blackPieces, uint64_t whitePieces, Color color);
+
 #endif

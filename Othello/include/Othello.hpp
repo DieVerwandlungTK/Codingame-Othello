@@ -18,6 +18,8 @@ private:
     };
 
 public:
+    static const int BOARD_SIZE = 8;
+    static const int BOARD_SIZE_DB = 64;
     // Initialize the starting position of the board
     OthelloBoard();
 
