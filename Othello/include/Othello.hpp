@@ -44,8 +44,6 @@ public:
 
     void printBoard()const;
 
-    void printBoard2file()const;
-
     static int popCount(uint64_t bitboard);
 
     std::vector<uint64_t> getPopPositions(uint64_t bitboard)const;

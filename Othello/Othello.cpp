@@ -143,36 +143,16 @@ void OthelloBoard::printBoard()const{
     for(int i = 0; i < 8; ++i){
         for(int j = 0; j < 8; ++j){
             if(blackPieces & mask){
-                std::cout << "B ";
+                std::cerr << "B ";
             }else if(whitePieces & mask){
-                std::cout << "W ";
+                std::cerr << "W ";
             }else{
-                std::cout << ". ";
+                std::cerr << ". ";
             }
             mask >>= 1;
         }
-        std::cout << std::endl;
+        std::cerr << std::endl;
     }
-}
-
-void OthelloBoard::printBoard2file()const{
-    uint64_t mask = 0x8000000000000000;
-    FILE *file = fopen("board.txt", "a+");
-    for(int i = 0; i < 8; ++i){
-        for(int j = 0; j < 8; ++j){
-            if(blackPieces & mask){
-                fprintf(file, "B ");
-            }else if(whitePieces & mask){
-                fprintf(file, "W ");
-            }else{
-                fprintf(file, ". ");
-            }
-            mask >>= 1;
-        }
-        fprintf(file, "\n");
-    }
-    fprintf(file, "\n");
-    fclose(file);
 }
 
 int OthelloBoard::popCount(uint64_t bitboard){
