@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.28.2)
 
-set(CMAKE_CXX_COMPILER "C:/Program Files/mingw64/bin/g++.exe" CACHE STRING "g++ compiler" FORCE)
+set(CMAKE_CXX_COMPILER "C:/msys64/mingw64/bin/g++.exe" CACHE STRING "g++ compiler" FORCE)
 project(main CXX)
 
 add_subdirectory(../Othello Othello)
