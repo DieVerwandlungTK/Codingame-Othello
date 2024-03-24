@@ -10,10 +10,10 @@ class OthelloGUI():
 
     def __init__(self)->None:
        self.othello = Othello()
-       self.gui = tk.Tk()
-       self.gui.geometry("500x700")
-       self.gui.title("Othello")
-       self.canvas = tk.Canvas(self.gui, width=500, height = 700)
+       self.root = tk.Tk()
+       self.root.geometry("500x700")
+       self.root.title("Othello")
+       self.canvas = tk.Canvas(self.root, width=500, height = 700)
        self.pixel_virtual = tk.PhotoImage(width=1, height=1)
        self.StoneStr = tk.StringVar()
        self.stoneLabel = tk.Label(self.canvas, textvariable=self.StoneStr, font=('', 50))
